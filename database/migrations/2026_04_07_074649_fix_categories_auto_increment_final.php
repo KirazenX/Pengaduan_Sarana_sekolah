@@ -11,8 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('input_aspirasi', function (Blueprint $table) {
+        Schema::table('aspirasis', function (Blueprint $table) {
             $table->dropForeign(['id_kategori']);
+        });
+
+        Schema::table('input_aspirasi', function (Blueprint $table) {
+            // Check if foreign key exists before dropping it to avoid errors
+            $foreignKeys = Schema::getForeignKeys('input_aspirasi');
+            $hasForeignKey = collect($foreignKeys)->contains(fn ($fk) => $fk['columns'] === ['id_kategori']);
+
+            if ($hasForeignKey) {
+                $table->dropForeign(['id_kategori']);
+            }
         });
 
         Schema::table('kategoris', function (Blueprint $table) {
@@ -22,6 +32,10 @@ return new class extends Migration
         Schema::table('input_aspirasi', function (Blueprint $table) {
             $table->foreign('id_kategori')->references('id_kategori')->on('kategoris')->cascadeOnDelete();
         });
+
+        Schema::table('aspirasis', function (Blueprint $table) {
+            $table->foreign('id_kategori')->references('id_kategori')->on('kategoris')->cascadeOnDelete();
+        });
     }
 
     /**
@@ -29,6 +43,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('aspirasis', function (Blueprint $table) {
+            $table->dropForeign(['id_kategori']);
+        });
+
         Schema::table('input_aspirasi', function (Blueprint $table) {
             $table->dropForeign(['id_kategori']);
         });
@@ -38,6 +56,10 @@ return new class extends Migration
         });
 
         Schema::table('input_aspirasi', function (Blueprint $table) {
+            $table->foreign('id_kategori')->references('id_kategori')->on('kategoris')->cascadeOnDelete();
+        });
+
+        Schema::table('aspirasis', function (Blueprint $table) {
             $table->foreign('id_kategori')->references('id_kategori')->on('kategoris')->cascadeOnDelete();
         });
     }

@@ -15,6 +15,7 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
+    // Definisi atribut model User
     protected $fillable = [
         'name', 'email', 'password', 'role', 'nis', 'kelas'
     ];
@@ -28,6 +29,7 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+    // Definisi casting untuk atribut model User
     protected function casts(): array
     {
         return [

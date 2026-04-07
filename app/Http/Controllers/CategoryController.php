@@ -7,26 +7,20 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Middleware untuk memastikan hanya admin yang dapat mengakses metode ini
     public function index()
     {
         $categories = Category::all();
         return view('admin.categories.index', compact('categories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Menampilkan form untuk membuat kategori baru
     public function create()
     {
         return view('admin.categories.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Menyimpan kategori baru ke database
     public function store(Request $request)
     {
         $request->validate([
@@ -41,26 +35,14 @@ class CategoryController extends Controller
             ->with('success', 'Kategori berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // Menampilkan form untuk mengedit kategori yang sudah ada
     public function edit(string $id)
     {
         $category = Category::findOrFail($id);
         return view('admin.categories.edit', compact('category'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // Memperbarui kategori yang sudah ada di database
     public function update(Request $request, string $id)
     {
         $category = Category::findOrFail($id);
@@ -77,9 +59,7 @@ class CategoryController extends Controller
             ->with('success', 'Kategori berhasil diperbarui');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Menghapus kategori dari database
     public function destroy(string $id)
     {
         $category = Category::findOrFail($id);

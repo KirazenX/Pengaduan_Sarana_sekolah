@@ -21,6 +21,7 @@ class FortifyServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
+    // Mendaftarkan layanan untuk tampilan login dan register, serta mengatur logika autentikasi menggunakan email atau NIS
     public function register(): void
     {
         $this->app->bind(\Laravel\Fortify\Contracts\LoginViewResponse::class, function () {
@@ -35,6 +36,7 @@ class FortifyServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
+    // Mengatur logika autentikasi menggunakan email atau NIS, serta mengonfigurasi pembatasan kecepatan untuk login dan autentikasi dua faktor
     public function boot(): void
     {
         Fortify::loginView(function () {

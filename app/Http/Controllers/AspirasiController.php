@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class AspirasiController extends Controller
 {
+    // Middleware untuk memastikan hanya siswa yang dapat mengakses metode ini
     public function index()
     {
         $userNis = auth()->user()->nis;
@@ -22,12 +23,14 @@ class AspirasiController extends Controller
         return view('siswa.index', compact('data', 'categories'));
     }
 
+    // Menampilkan form untuk membuat aspirasi baru
     public function create()
     {
         $categories = Category::all();
         return view('siswa.create', compact('categories'));
     }
 
+    // Menampilkan detail aspirasi tertentu
     public function show($id)
     {
         $userNis = auth()->user()->nis;
@@ -40,6 +43,7 @@ class AspirasiController extends Controller
         return view('siswa.show', compact('aspirasi'));
     }
 
+    // Menyimpan aspirasi baru ke database
     public function store(Request $request)
     {
         $request->validate([

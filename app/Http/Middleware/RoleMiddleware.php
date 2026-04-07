@@ -13,6 +13,7 @@ class RoleMiddleware
      *
      * @param  Closure(Request): (Response)  $next
      */
+    // Middleware untuk memeriksa peran pengguna sebelum mengizinkan akses ke rute tertentu
     public function handle($request, Closure $next, $role)
     {
         if (auth()->user()->role != $role) {

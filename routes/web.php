@@ -13,6 +13,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+// Rute untuk dashboard yang mengarahkan pengguna ke halaman yang sesuai berdasarkan peran mereka (admin atau siswa)
 Route::middleware('auth')->get('/dashboard', function () {
     if (auth()->user()->role === 'admin') {
         return redirect()->route('admin.aspirasi.index');
@@ -21,6 +22,7 @@ Route::middleware('auth')->get('/dashboard', function () {
     return redirect()->route('siswa.aspirasi.index');
 })->name('dashboard');
 
+// Rute yang dikelompokkan berdasarkan middleware untuk memastikan hanya pengguna yang terautentikasi dapat mengaksesnya, dengan pembagian lebih lanjut berdasarkan peran (siswa atau admin)
 Route::middleware(['auth'])->group(function () {
 
     Route::middleware('role:siswa')->group(function () {
@@ -30,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/aspirasi', [AspirasiController::class, 'store'])->name('siswa.aspirasi.store');
     });
 
+    // Rute untuk admin yang mencakup manajemen aspirasi, pengguna, dan kategori, dengan pembatasan akses hanya untuk admin melalui middleware 'role:admin'
     Route::middleware('role:admin')->group(function () {
         Route::get('/admin/aspirasi', [AdminController::class, 'index'])->name('admin.aspirasi.index');
         Route::get('/admin/users', [AdminController::class, 'usersIndex'])->name('admin.users.index');

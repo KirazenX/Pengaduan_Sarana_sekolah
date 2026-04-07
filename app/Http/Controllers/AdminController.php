@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
+    // Menampilkan daftar aspirasi dengan filter berdasarkan tanggal, bulan, siswa, dan kategori
     public function index(Request $request)
     {
         $query = Aspirasi::with(['inputAspirasi.siswa', 'category', 'feedbacks']);
@@ -42,6 +43,7 @@ class AdminController extends Controller
         return view('admin.index', compact('data', 'users', 'categories', 'request'));
     }
 
+    // Menampilkan daftar pengguna dengan opsi untuk mengelola akun siswa dan admin
     public function usersIndex()
     {
         $users = User::orderBy('role')->orderBy('name')->get();
@@ -49,11 +51,13 @@ class AdminController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
+    // Menampilkan form untuk membuat akun pengguna baru
     public function createUser()
     {
         return view('admin.users.create');
     }
 
+    // Menyimpan akun pengguna baru ke database
     public function storeUser(Request $request)
     {
         $rules = [
@@ -87,6 +91,7 @@ class AdminController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'Akun pengguna berhasil ditambahkan');
     }
 
+    // Menampilkan form untuk mengedit akun pengguna yang sudah ada
     public function editUser($id)
     {
         $user = User::findOrFail($id);
@@ -94,6 +99,7 @@ class AdminController extends Controller
         return view('admin.users.edit', compact('user'));
     }
 
+    // Memperbarui akun pengguna yang sudah ada di database
     public function updateUser(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -133,6 +139,7 @@ class AdminController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'Akun pengguna berhasil diperbarui');
     }
 
+    // Memperbarui status aspirasi dan menambahkan feedback dari admin
     public function update(Request $request, $id)
     {
         $request->validate([

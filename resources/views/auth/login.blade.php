@@ -10,9 +10,9 @@
                     @csrf
 
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" required>
-                        @error('email')
+                        <label for="login" class="form-label">Email atau NIS</label>
+                        <input type="text" name="login" id="login" class="form-control" value="{{ old('login') }}" required>
+                        @error('login')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
